@@ -1,5 +1,5 @@
 name: Java CI with Maven
-# Test caching speed
+# Test caching speed for 2 times for Bai 6
 # Nhiệm vụ: Kích hoạt workflow khi có sự kiện push và pull_request
 on:
   push:
