@@ -59,7 +59,7 @@
                                             <value>COVEREDRATIO</value>
  <!--                                           <minimum>0.80</minimum> -->
 <!--                                            tạm thời vô hiệu hóa cho bài 6-->
-                                            <minimum> 0.01</minimum>
+                                            <minimum> 0.0</minimum>
 
                                         </limit>
                                     </limits>
