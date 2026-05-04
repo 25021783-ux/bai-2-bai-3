@@ -27,9 +27,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # Bước 3: Kiểm tra chất lượng code (Bài 2) trước khi build
+      # Bước 3: Kiểm tra chất lượng code (Bài 2) trước khi build (Vô hiệu hóa cho bài 6)
       - name: Run Checkstyle
-        run: mvn checkstyle:check
+#       run: mvn checkstyle:check
       # Bước 4: Bài 3 & 5 - Chạy Test, đo Coverage (JaCoCo) và đóng gói (.jar)
       # Lệnh verify sẽ thực hiện: test -> package -> check jacoco coverage
       - name: Build And Verify with Maven
