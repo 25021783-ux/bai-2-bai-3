@@ -1,0 +1,41 @@
+name: Java CI with Maven
+
+# Nhiệm vụ: Kích hoạt workflow khi có sự kiện push và pull_request
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Bước 1: Lấy mã nguồn từ repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Bước 2: Thiết lập JDK 11 (Phù hợp với môi trường Lab của bạn)
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      # Bước 3: Kiểm tra chất lượng code (Bài 2) trước khi build
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
+
+      # Bước 4: Thực thi test và package (Bài 3)
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      # Bước 5: Triển khai upload-artifact để lưu trữ tệp .jar
+      - name: Upload Build Artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bank-system-artifact
+          path: target/*.jar
