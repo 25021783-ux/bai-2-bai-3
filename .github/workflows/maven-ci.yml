@@ -19,24 +19,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Bước 2: Thiết lập JDK 11 (Phù hợp với môi trường Lab của bạn)
+      # Bước 2: Bài 6 Thiết lập JDK 11 (Để tăng tốc pipeline)
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
-          cache: maven
+          cache: maven # Kích hoạt dependency caching cho Bài 6
 
       # Bước 3: Kiểm tra chất lượng code (Bài 2) trước khi build (Vô hiệu hóa cho bài 6)
 #      - name: Run Checkstyle
 #       run: mvn checkstyle:check
+
       # Bước 4: Bài 3 & 5 - Chạy Test, đo Coverage (JaCoCo) và đóng gói (.jar)
       # Lệnh verify sẽ thực hiện: test -> package -> check jacoco coverage
       - name: Build And Verify with Maven
         run: mvn -B verify --file pom.xml
 
       # Bước 5: Bài 3 & 4 - Lưu trữ tệp .jar (Artifacts)
-      - name: Build, Test and Verify Coverage
+      - name: Upload Build Artifact (.jar)
         if: success()
         uses: actions/upload-artifact@v4
         with:
