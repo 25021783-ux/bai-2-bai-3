@@ -12,7 +12,7 @@ public class AccountTest {
     String file = "transaction.log";
 
     // CỐ TÌNH GÂY LỖI: Nối chuỗi bằng dấu gạch chéo ngược của Windows
-    String actualPath = folder + "\\" + file;
+    String actualPath = Paths.get(folder,file).toString();
 
     // Đường dẫn chuẩn mong đợi
     String expectedPath = Paths.get("logs", "transaction.log").toString();
