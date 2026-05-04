@@ -30,15 +30,23 @@ jobs:
       # Bước 3: Kiểm tra chất lượng code (Bài 2) trước khi build
       - name: Run Checkstyle
         run: mvn checkstyle:check
+      # Bước 4: Bài 3 & 5 - Chạy Test, đo Coverage (JaCoCo) và đóng gói (.jar)
+      # Lệnh verify sẽ thực hiện: test -> package -> check jacoco coverage
+      - name: Build And Verify with Maven
+        run: mvn -B verify --file pom.xml
 
-      # Bước 4: Thực thi test và package (Bài 3,4)
-      - name: Build  and Test with Maven
-        run: mvn -B package --file pom.xml
-
-      # Bước 5: Triển khai upload-artifact để lưu trữ tệp .jar
-      - name: Upload Build Artifact
+      # Bước 5: Bài 3 & 4 - Lưu trữ tệp .jar (Artifacts)
+      - name: Build, Test and Verify Coverage
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: bank-system-artifact
+          name: bank-system-artifact-${{ matrix.os }}
           path: target/*.jar
+
+      # Bước 6: Bài  5- Lưu tr báo cáo Jacoco (HTML)
+      - name: Upload JaCoCo Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report-${{ matrix.os }}
+          path: target/site/jacoco
