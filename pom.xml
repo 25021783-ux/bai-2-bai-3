@@ -58,7 +58,7 @@
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
  <!--                                           <minimum>0.80</minimum> -->
-<!--                                            tạm thời vô hiệu hóa cho bài 6-->
+<!--                                            tạm thời vô hiệu hóa bài 5 -->
                                             <minimum> 0.0</minimum>
 
                                         </limit>
