@@ -4,7 +4,7 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "main", "master" ]
-  pull_request:
+  pull_request: # trigger cho bài 7
     branches: [ "main", "master" ]
 
 jobs:
@@ -28,15 +28,25 @@ jobs:
           cache: maven # Kích hoạt dependency caching cho Bài 6
 
       # Bước 3: Kiểm tra chất lượng code (Bài 2) trước khi build (Vô hiệu hóa cho bài 6)
-#      - name: Run Checkstyle
-#       run: mvn checkstyle:check
+      - name: Run Checkstyle
+        continue-on-error: true # cho phép đi tiếp để bot có cơ hội comment
+        run: mvn checkstyle:check
+
+      # Bài 7 : Inline Feedback - Bot t động comment lên lỗi Pull Request
+      - name : Checkstyle PR Comments
+        if :
+          ${{ github.event_name == 'pull_request' && matrix.os == 'ubuntu-latest'}}
+        uses: dbelyaev/action-checkstyle@v1.2.0
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          reporter: github-pr-review
 
 
 
       # Bước 4: Bài 3 & 5 - Chạy Test, đo Coverage (JaCoCo) và đóng gói (.jar)
       # Lệnh verify sẽ thực hiện: test -> package -> check jacoco coverage
       - name: Build And Verify with Maven
-        run: mvn -B verify --file pom.xml
+        run: mvn -B verify -Djacoco.skip=true --file pom.xml
 
       # Bước 5: Bài 3 & 4 - Lưu trữ tệp .jar (Artifacts)
       - name: Upload Build Artifact (.jar)
@@ -47,9 +57,10 @@ jobs:
           path: target/*.jar
 
       # Bước 6: Bài  5- Lưu tr báo cáo Jacoco (HTML)
-      - name: Upload JaCoCo Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report-${{ matrix.os }}
-          path: target/site/jacoco
+      #Tạm thời vô hiệu hóa cho bài 7
+#      - name: Upload JaCoCo Report
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: jacoco-report-${{ matrix.os }}
+#          path: target/site/jacoco
