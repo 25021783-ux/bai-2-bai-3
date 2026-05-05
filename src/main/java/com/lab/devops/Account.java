@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
  * Lớp trừu tượng đại diện cho một tài khoản ngân hàng.
  * Cung cấp các chức năng cơ bản về quản lý số dư và lịch sử giao dịch.
  */
-public abstract class Account {
+public abstract class Account                                                                                                                                                                                                                                                                                                                                                                                             {
 
-  private static final Logger logger = LoggerFactory.getLogger(Account.class);
+  private static final Logger logger =                                                                                                                                                                                                                                              LoggerFactory.getLogger(Account.class);
 
   /** Loại tài khoản thanh toán. */
   public static final String CHECKING_TYPE = "CHECKING";
